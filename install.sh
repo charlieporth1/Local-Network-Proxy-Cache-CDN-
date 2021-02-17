@@ -1,4 +1,12 @@
 #!/bin/bash
+function check_root () {
+  if [[ $EUID -ne 0 ]]; then
+    echo "This script must be run as root" 
+    exit 1
+  fi
+}
+check_root
+
 CURRENT_DIR=$PWD
 CONFIG_DIR=$CURRENT_DIR/config
 

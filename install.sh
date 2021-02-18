@@ -15,17 +15,24 @@ CONFIG_DIR=$SCRIPT_DIR/config
 INSTALL_CONFIG_DIR=/etc/
 INSTALL_BIN_DIR=/usr/local/bin
 
+DEFAULT_SQUID_CONF=$INSTALL_CONFIG_DIR/squid/conf.d/debian.conf
+
+MEM_COUNT=`grep MemTotal /proc/meminfo | awk '{print $2 / 1024}'`
 IPS=`ifconfig | grep "en\|wlan0" -A 1 | grep -oE 'inet ([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})' | grep -oE '([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})'`
+
+MEM_AMOUNT=`bc <<< "scale=3; $MEM_COUNT / 2.5"`
 apt -y install unbound squid
 
 
 cp -rf $CONFIG_DIR/squid/* $INSTALL_CONFIG_DIR/squid/conf.d/
 cp -rf $CONFIG_DIR/unbound/* $INSTALL_CONFIG_DIR/unbound/unbound.conf.d/
 
-echo "dns_nameservers $IPS" | sudo tee -a $INSTALL_CONFIG_DIR/squid/conf.d/debian.conf
-
+echo "dns_nameservers $IPS" | sudo tee -a $DEFAULT_SQUID_CONF
+echo "cache_mem $MEM_AMOUNT MB" | sudo tee -a $DEFAULT_SQUID_CONF
 
 source $CURRENT_DIR/apply.sh
+
+
 
 ENABLE_CDN
 RESTART_CDN

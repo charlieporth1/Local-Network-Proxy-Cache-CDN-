@@ -8,6 +8,8 @@ function check_root () {
 check_root
 
 
+apt -y install unbound squid bc
+
 SCRIPT_DIR=`dirname $0`
 
 CONFIG_DIR=$SCRIPT_DIR/config
@@ -16,12 +18,14 @@ INSTALL_CONFIG_DIR=/etc/
 INSTALL_BIN_DIR=/usr/local/bin
 
 DEFAULT_SQUID_CONF=$INSTALL_CONFIG_DIR/squid/conf.d/debian.conf
+UNBOUND_CACHE_CONF=$INSTALL_CONFIG_DIR/unbound/unbound.conf.d/04-cache.conf
 
-MEM_COUNT=`grep MemTotal /proc/meminfo | awk '{print $2 / 1024}'`
 IPS=`ifconfig | grep "en\|wlan0" -A 1 | grep -oE 'inet ([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})' | grep -oE '([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})'`
 
+MEM_COUNT=`grep MemTotal /proc/meminfo | awk '{print $2 / 1024}'`
 MEM_AMOUNT=`bc <<< "scale=3; $MEM_COUNT / 2.5"`
-apt -y install unbound squid
+
+
 
 
 cp -rf $CONFIG_DIR/squid/* $INSTALL_CONFIG_DIR/squid/conf.d/
@@ -30,7 +34,9 @@ cp -rf $CONFIG_DIR/unbound/* $INSTALL_CONFIG_DIR/unbound/unbound.conf.d/
 echo "dns_nameservers $IPS" | sudo tee -a $DEFAULT_SQUID_CONF
 echo "cache_mem $MEM_AMOUNT MB" | sudo tee -a $DEFAULT_SQUID_CONF
 
-source $CURRENT_DIR/apply.sh
+bash $SCRIPT_DIR/createSwap.sh
+
+source $SCRIPT_DIR/apply.sh
 
 
 
@@ -38,6 +44,6 @@ ENABLE_CDN
 RESTART_CDN
 
 printf """
-	Point your devices to the http(s), ftp, socks, and rstp proxy of $IPS as well as pointing your DNS servers of your router and/or devices to $IPS.
-	Have a great speedy day
+	Point your devices and routers to the http(s), ftp, socks, and rstp proxy of $IPS as well as pointing your DNS servers of your router and/or devices to $IPS.
+	Have a great speedy day. Please remeber to reboot to apply settings in kernel improvements.
 """

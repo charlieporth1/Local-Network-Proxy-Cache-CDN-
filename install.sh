@@ -7,8 +7,10 @@ function check_root () {
 }
 check_root
 
-CURRENT_DIR=$PWD
-CONFIG_DIR=$CURRENT_DIR/config
+
+SCRIPT_DIR=`dirname $0`
+
+CONFIG_DIR=$SCRIPT_DIR/config
 
 INSTALL_CONFIG_DIR=/etc/
 INSTALL_BIN_DIR=/usr/local/bin
@@ -24,9 +26,11 @@ echo "dns_nameservers $IPS" | sudo tee -a $INSTALL_CONFIG_DIR/squid/conf.d/debia
 
 
 source $CURRENT_DIR/apply.sh
+
 ENABLE_CDN
 RESTART_CDN
+
 printf """
-	Point your devices to the http(s), ftp, socks, rstp proxy of $IPS and your DNS servers of your router and devices to $IPS
+	Point your devices to the http(s), ftp, socks, and rstp proxy of $IPS as well as pointing your DNS servers of your router and/or devices to $IPS.
 	Have a great speedy day
 """

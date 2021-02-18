@@ -16,7 +16,6 @@ function START_CDN() {
 	systemctl start unbound.service
 }
 
-
 export -f RESTART_CDN
 export -f ENABLE_CDN
 export -f STOP_CDN

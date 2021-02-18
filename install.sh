@@ -35,6 +35,7 @@ echo "dns_nameservers $IPS" | sudo tee -a $DEFAULT_SQUID_CONF
 echo "cache_mem $MEM_AMOUNT MB" | sudo tee -a $DEFAULT_SQUID_CONF
 
 bash $SCRIPT_DIR/createSwap.sh
+bash $SCRIPT_DIR/kernelImprovements.sh
 
 source $SCRIPT_DIR/apply.sh
 

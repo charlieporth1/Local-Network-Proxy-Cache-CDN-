@@ -23,7 +23,9 @@ cp -rf $CONFIG_DIR/unbound/* $INSTALL_CONFIG_DIR/unbound/unbound.conf.d/
 echo "dns_nameservers $IPS" | sudo tee -a $INSTALL_CONFIG_DIR/squid/conf.d/debian.conf
 
 
-bash $CURRENT_DIR/apply.sh
+source $CURRENT_DIR/apply.sh
+ENABLE_CDN
+RESTART_CDN
 printf """
 	Point your devices to the http(s), ftp, socks, rstp proxy of $IPS and your DNS servers of your router and devices to $IPS
 	Have a great speedy day

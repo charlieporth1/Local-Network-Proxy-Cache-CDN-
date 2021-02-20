@@ -14,4 +14,8 @@ GET_SSID_CMD=$(iwgetid -r)
 if [[ "$GET_SSID_CMD" == "$HOME_SSID" ]]; then
 	echo "At $GET_SSID_CMD which is home stopping cdn"
 	STOP_CDN
+	#other programs here
+	bash $PROG/ledmanager.sh
+else
+	START_CDN
 fi

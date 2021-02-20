@@ -36,7 +36,7 @@ echo "cache_mem $MEM_AMOUNT MB" | sudo tee -a $DEFAULT_SQUID_CONF
 
 bash $SCRIPT_DIR/createSwap.sh
 bash $SCRIPT_DIR/kernelImprovements.sh
-
+bash $SCRIPT_DIR/increaseCpu.sh
 source $SCRIPT_DIR/apply.sh
 
 

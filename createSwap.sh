@@ -7,7 +7,7 @@ if [[ `echo $FREE_SPACE | rev | cut -c 2- | rev` -ge 12 ]] && \
    [[ $MEM_COUNT -le 4096 ]] && \
    [[ ! -f /swapfile ]]
 then
-	sudo fallocate -l $(( $MEM_COUNT * 2 )) M /swapfile
+	sudo fallocate -l $(( $MEM_COUNT * 4 )) M /swapfile
 	sudo chmod 600 /swapfile
 	sudo mkswap /swapfile
 	sudo swapon /swapfile

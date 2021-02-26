@@ -9,7 +9,7 @@ MEM_COUNT=$(round `grep MemTotal /proc/meminfo | awk '{print $2 / 1024}'` 0)
 
 #Given a floating point value, we can round it trivially with printf:
 
-#If more than 12 GB of free space and less than 2GB of ram create swap if swapfile does not exist
+#If more than 12 GB of free space and less than 4GB of ram create swap if swapfile does not exist
 if [[ `echo $FREE_SPACE | rev | cut -c 2- | rev` -ge 12 ]] && [[ $MEM_COUNT -le 4096 ]] && ! [[ -f /swapfile ]]; then
 	sudo touch /swapfile
 	sudo dd if=/dev/zero of=/swapfile bs=512 count=$(( $MEM_COUNT * 8 ))K status=progress
@@ -22,5 +22,6 @@ if [[ `echo $FREE_SPACE | rev | cut -c 2- | rev` -ge 12 ]] && [[ $MEM_COUNT -le 
 	sudo sysctl vm.swappiness=25
  	[[ -z `grep -o "vm.swappiness" /etc/sysctl.conf` ]] && echo 'vm.swappiness=25' | sudo tee -a /etc/sysctl.conf
 elif [[ -f /swapfile ]]; then
+	sudo mkswap /swapfile
 	sudo swapon /swapfile
 fi

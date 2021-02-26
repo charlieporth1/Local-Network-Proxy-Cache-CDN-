@@ -5,7 +5,7 @@ MEM_COUNT=`grep MemTotal /proc/meminfo | awk '{print $2 / 1024}'`
 #If more than 12 GB of free space and less than 2GB of ram create swap if swapfile does not exist
 if [[ `echo $FREE_SPACE | rev | cut -c 2- | rev` -ge 12 ]] && \
    [[ $MEM_COUNT -le 4096 ]] && \
-   [[ ! -f /swapfile ]]
+   ! [[ -f /swapfile ]]
 then
 	sudo fallocate -l $(( $MEM_COUNT * 4 )) M /swapfile
 	sudo chmod 600 /swapfile
@@ -16,6 +16,6 @@ then
 	sudo sysctl vm.swappiness=25
  	[[ -z `grep -o "vm.swappiness"  /etc/sysctl.conf` ]] && echo 'vm.swappiness=25' | sudo tee -a /etc/sysctl.conf
 	sudo sysctl -p
-elif [[ -f /swapfile ]]
+elif [[ -f /swapfile ]]; then
 	sudo swapon /swapfile
 fi

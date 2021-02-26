@@ -22,6 +22,5 @@ if [[ `echo $FREE_SPACE | rev | cut -c 2- | rev` -ge 12 ]] && [[ $MEM_COUNT -le 
 	sudo sysctl vm.swappiness=25
  	[[ -z `grep -o "vm.swappiness" /etc/sysctl.conf` ]] && echo 'vm.swappiness=25' | sudo tee -a /etc/sysctl.conf
 elif [[ -f /swapfile ]]; then
-	sudo mkswap /swapfile
 	sudo swapon /swapfile
 fi

@@ -1,6 +1,6 @@
 #!/bin/bash
 ROOT_STORAGE_STATS=`df -h | grep root`
-FREE_SPACE=`printf "$ROOT_STORAGE_STATS" | awk '{print $4}'`
+FREE_SPACE=`df -h | grep root | awk '{print $4}'`
 MEM_COUNT=`grep MemTotal /proc/meminfo | awk '{print $2 / 1024}'`
 #If more than 12 GB of free space and less than 2GB of ram create swap if swapfile does not exist
 if [[ `echo $FREE_SPACE | rev | cut -c 2- | rev` -ge 12 ]] && \

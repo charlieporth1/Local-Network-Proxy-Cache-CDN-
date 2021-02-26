@@ -1,11 +1,11 @@
 #!/bin/bash
 # round $1 to $2 decimal places
 round() {
-    printf "%.{$2:-0}f" "$1"
+    printf "%.${2:-0}f" "$1"
 }
 ROOT_STORAGE_STATS=`df -h | grep root`
 FREE_SPACE=`df -h | grep root | awk '{print $4}'`
-MEM_COUNT=$(round `grep MemTotal /proc/meminfo | awk '{print $2 / 1024}'`)
+MEM_COUNT=$(round `grep MemTotal /proc/meminfo | awk '{print $2 / 1024}'` 0)
 
 #Given a floating point value, we can round it trivially with printf:
 

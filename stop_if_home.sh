@@ -4,8 +4,6 @@
 # It detects what wifi SSID is the home network and if its currently connected and shuts down the cdn processes because they take cpu and memory 
 SCRIPT_DIR=`dirname $0`
 PROG=/home/pi/Programs
-echo $SCRIPT_DIR
-
 source $SCRIPT_DIR/apply.sh
 
 HOME_SSID="TLHome"

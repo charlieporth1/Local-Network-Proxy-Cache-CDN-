@@ -8,8 +8,8 @@ function ENABLE_CDN() {
 	systemctl enable unbound.service
 }
 function STOP_CDN() {
-	systemctl stop squid.service
-	systemctl stop unbound.service
+	timeout 30s systemctl stop squid.service
+	timeout 30s systemctl stop unbound.service
 }
 function START_CDN() {
 	systemctl start squid.service

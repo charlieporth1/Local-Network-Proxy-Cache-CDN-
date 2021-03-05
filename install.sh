@@ -20,7 +20,7 @@ INSTALL_BIN_DIR=/usr/local/bin
 DEFAULT_SQUID_CONF=$INSTALL_CONFIG_DIR/squid/conf.d/debian.conf
 UNBOUND_CACHE_CONF=$INSTALL_CONFIG_DIR/unbound/unbound.conf.d/04-cache.conf
 
-IPS=`ifconfig | grep "(e(n[n|s|x|p|o|e|b](.*)|th[0-9])|wlan[0-9]))" -A 1 | grep -oE 'inet ([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})' | grep -oE '([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})'`
+IPS=`ifconfig | grep "(e(n[n|s|x|p|o|e|b](.*)|th[0-9])|wlan[0-9])" -A 1 | grep -oE 'inet ([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})' | grep -oE '([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})'`
 
 MEM_COUNT=`grep MemTotal /proc/meminfo | awk '{print $2 / 1024}'`
 MEM_AMOUNT=`bc <<< "scale=3; $MEM_COUNT / 2.5"`

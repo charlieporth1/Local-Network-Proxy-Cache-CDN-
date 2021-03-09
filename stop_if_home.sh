@@ -13,8 +13,10 @@ GET_SSID_CMD=$(iwgetid -r)
 if [[ "$GET_SSID_CMD" == "$HOME_SSID" ]]; then
 	echo "At $GET_SSID_CMD which is home stopping cdn"
 	STOP_CDN
+	sudo systemctl start tvmosaic.service
 	#other programs here
-	bash $PROG/ledmanager.sh
+#	bash $PROG/ledmanager.sh
 else
+	sudo systemctl stop tvmosaic.service
 	START_CDN
 fi

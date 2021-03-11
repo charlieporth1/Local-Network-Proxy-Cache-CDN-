@@ -29,6 +29,7 @@ MEM_AMOUNT=`bc <<< "scale=3; $MEM_COUNT / 2.5"`
 
 
 cp -rf $CONFIG_DIR/squid/* $INSTALL_CONFIG_DIR/squid/conf.d/
+cp -rf $CONFIG_DIR/sysctl.conf $INSTALL_CONFIG_DIR/sysctl.conf
 cp -rf $CONFIG_DIR/unbound/* $INSTALL_CONFIG_DIR/unbound/unbound.conf.d/
 
 echo "dns_nameservers $IPS" | sudo tee -a $DEFAULT_SQUID_CONF

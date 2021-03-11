@@ -18,5 +18,14 @@ if [[ "$GET_SSID_CMD" == "$HOME_SSID" ]]; then
 #	bash $PROG/ledmanager.sh
 else
 	sudo systemctl stop tvmosaic.service
+	killall tvmosaic_server
+	sudo ip link set wlan0 down && sudo ip link set wlan0 up
+	sudo ip link set wlan0 down
+	sudo ifconfig enxb827ebd8ea6c down
+	sudo ifconfig wlan0 down
+	sudo ifconfig enxb827ebd8ea6c 192.168.1.4 up
+	sudo ifconfig wlan0 192.168.1.5 up
+	sudo ip link set wlan0 down
+
 	START_CDN
 fi

@@ -39,7 +39,7 @@ bash $SCRIPT_DIR/kernelImprovements.sh
 bash $SCRIPT_DIR/increaseCpu.sh
 source $SCRIPT_DIR/apply.sh
 
-
+echo "*  *   *   *   *    root    SHELL=/bin/bash; bash $SCRIPT_DIR/pm.proxy_health_check.sh >> /var/log/health-check.log" > /etc/cron.d/health_check
 
 ENABLE_CDN
 RESTART_CDN

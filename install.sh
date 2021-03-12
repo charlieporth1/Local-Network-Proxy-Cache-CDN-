@@ -1,4 +1,29 @@
 #!/bin/bash
+shopt -s histappend
+
+HISTSIZE=10000
+HISTFILESIZE=500000
+SAVEHIST=10000
+
+export HISTCONTROL=ignoredups:erasedups
+
+shopt -s histappend
+shopt -s autocd
+shopt -s cdable_vars
+shopt -s cdspell
+shopt -s cmdhist
+shopt -s expand_aliases
+shopt -s extglob
+shopt -s hostcomplete
+shopt -u progcomp
+shopt -s progcomp_alias
+shopt -s promptvars
+shopt -s direxpand
+shopt -s compat44
+shopt -s globstar
+
+shopt -s checkwinsize
+
 function check_root () {
   if [[ $EUID -ne 0 ]]; then
     echo "This script must be run as root"
@@ -27,7 +52,7 @@ MEM_AMOUNT=`bc <<< "scale=3; $MEM_COUNT / 2.5"`
 
 
 
-
+cp -rf $INSTALL_CONFIG_DIR/squid/ $INSTALL_CONFIG_DIR/squid.bk/
 cp -rf $CONFIG_DIR/squid/* $INSTALL_CONFIG_DIR/squid/conf.d/
 cp -rf $CONFIG_DIR/sysctl.conf $INSTALL_CONFIG_DIR/sysctl.conf
 cp -rf $CONFIG_DIR/unbound/* $INSTALL_CONFIG_DIR/unbound/unbound.conf.d/
